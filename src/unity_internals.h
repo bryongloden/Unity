@@ -344,7 +344,7 @@ extern void UNITY_OUTPUT_FLUSH(void);
  *-------------------------------------------------------*/
 #if !defined(UNITY_WEAK_ATTRIBUTE) && !defined(UNITY_WEAK_PRAGMA)
 #   ifdef __GNUC__ /* includes clang */
-#       if !(defined(__WIN32__) && defined(__clang__))
+#       if !(defined(__WIN32__) && defined(__clang__)) && !defined(__TMS470__)
 #           define UNITY_WEAK_ATTRIBUTE __attribute__((weak))
 #       endif
 #   endif
@@ -639,6 +639,15 @@ extern const char UnityStrErr64[];
 #endif
 
 #define UNITY_UNUSED(x) (void)(sizeof(x))
+
+/*-----------------------------------------------
+ * Command Line Argument Support
+ *-----------------------------------------------*/
+
+#ifdef UNITY_USE_COMMAND_LINE_ARGS
+int UnityParseOptions(int argc, char** argv);
+int UnityTestMatches(void);
+#endif
 
 /*-------------------------------------------------------
  * Basic Fail and Ignore
